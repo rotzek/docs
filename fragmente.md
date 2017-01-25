@@ -92,3 +92,22 @@ Hierbei wird das Fragment /core/fragments/core/navigations/pagination.php für d
 
     echo $fragment->parse('mypagination.php');
 
+
+#### Beispiel 2 für die Paginierung
+
+$pager = new rex_pager(10);
+$table = rex_yform_manager_table::get('rex_meinetabelle');
+$ergebnisse = $table->query()
+    ->paginate($pager);
+$fragment = new rex_fragment();
+$fragment->setVar('urlprovider', rex_article::getCurrent());
+$fragment->setVar('pager', $pager);
+echo $fragment->parse('core/navigations/pagination.php');
+
+foreach ($ergebnisse as $erg) {
+echo "ID: ".$erg->id;
+}
+echo $pager->getRowCount();
+echo $pager->getCurrentPage();
+echo $pager->getLastPage();
+echo $pager->getPageCount();
